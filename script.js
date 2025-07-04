@@ -1,9 +1,9 @@
-// Загрузка данных и построение Plot
+d3.csv("vstup_2024.csv").then(data => {
 
-d3.csv("vstup_2024.csv").then(raw => {
-  // Группировка по спеціальності та статі
+  console.log(data);
+
   const grouped = d3.rollups(
-    raw,
+    data,
     v => ({
       Ч: v.filter(d => d.Стать === "Ч").length,
       Ж: v.filter(d => d.Стать === "Ж").length,
@@ -19,7 +19,8 @@ d3.csv("vstup_2024.csv").then(raw => {
     score_f: agg.score_f
   }));
 
-  // Сортировка по количеству Чоловіків
+  console.log(grouped);
+
   grouped.sort((a, b) => a.Ч - b.Ч);
 
   const maxApplicants = d3.max(grouped, d => d.Ч);
@@ -39,30 +40,10 @@ d3.csv("vstup_2024.csv").then(raw => {
       padding: 0.2
     },
     marks: [
-      Plot.barX(grouped, {
-        x: "Ч",
-        y: "speciality",
-        fill: "steelblue",
-        opacity: 0.6
-      }),
-      Plot.barX(grouped, {
-        x: "Ж",
-        y: "speciality",
-        fill: "red",
-        opacity: 0.4
-      }),
-      Plot.dot(grouped, {
-        x: d => d.score_m * scoreScale,
-        y: "speciality",
-        fill: "navy",
-        r: 4
-      }),
-      Plot.dot(grouped, {
-        x: d => d.score_f * scoreScale,
-        y: "speciality",
-        fill: "orange",
-        r: 4
-      }),
+      Plot.barX(grouped, { x: "Ч", y: "speciality", fill: "steelblue", opacity: 0.6 }),
+      Plot.barX(grouped, { x: "Ж", y: "speciality", fill: "red", opacity: 0.4 }),
+      Plot.dot(grouped, { x: d => d.score_m * scoreScale, y: "speciality", fill: "navy", r: 4 }),
+      Plot.dot(grouped, { x: d => d.score_f * scoreScale, y: "speciality", fill: "orange", r: 4 }),
     ],
     fx: {
       label: "Конкурсний бал",
