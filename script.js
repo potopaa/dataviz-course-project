@@ -1,4 +1,5 @@
 d3.csv("vstup_2024.csv").then(data => {
+
   const grouped = data.map(d => ({
     speciality: d["Спеціальність"],
     Ч: +d.Ч,
@@ -17,14 +18,38 @@ d3.csv("vstup_2024.csv").then(data => {
     width: 1000,
     height: grouped.length * 20,
     marginLeft: 350,
-    marginRight: 80,
+    marginRight: 100,
     x: { label: "Кількість вступників" },
     y: { domain: grouped.map(d => d.speciality), padding: 0.2 },
     marks: [
-      Plot.barX(grouped, { x: "Ч", y: "speciality", fill: "steelblue", opacity: 0.6 }),
-      Plot.barX(grouped, { x: "Ж", y: "speciality", fill: "red", opacity: 0.4 }),
-      Plot.dot(grouped, { x: d => d.score_m * scoreScale, y: "speciality", fill: "navy", r: 4 }),
-      Plot.dot(grouped, { x: d => d.score_f * scoreScale, y: "speciality", fill: "orange", r: 4 }),
+
+      Plot.barX(grouped, {
+        x: "Ч",
+        y: "speciality",
+        fill: "steelblue",
+        opacity: 0.6
+      }),
+
+      Plot.barX(grouped, {
+        x: "Ж",
+        y: "speciality",
+        fill: "red",
+        opacity: 0.4
+      }),
+
+      Plot.dot(grouped, {
+        x: d => d.score_m * scoreScale,
+        y: "speciality",
+        fill: "navy",
+        r: 4
+      }),
+
+      Plot.dot(grouped, {
+        x: d => d.score_f * scoreScale,
+        y: "speciality",
+        fill: "orange",
+        r: 4
+      }),
     ],
     fx: {
       label: "Конкурсний бал",
@@ -36,7 +61,6 @@ d3.csv("vstup_2024.csv").then(data => {
 
   document.getElementById("chart").append(chart);
 
-  // Легенда
   const legend = document.createElement("div");
   legend.innerHTML = `
     <p><span style="color: steelblue;">■</span> Чоловіки</p>
@@ -45,6 +69,7 @@ d3.csv("vstup_2024.csv").then(data => {
     <p><span style="color: orange;">●</span> Середній бал (Жінки)</p>
   `;
   legend.style.fontSize = "14px";
+  legend.style.marginTop = "20px";
   document.getElementById("chart").append(legend);
 
 }).catch(err => console.error("Error:", err));
