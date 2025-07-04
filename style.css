@@ -9,6 +9,11 @@ body {
   font-size: 22px;
   font-weight: bold;
   line-height: 1.4;
+  width: 100%;
+}
+
+#chart-container {
+  position: relative;
 }
 
 .legend {
@@ -21,8 +26,9 @@ body {
 
 .note {
   position: absolute;
-  right: 4px;
-  bottom: 3px;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 14px;
   max-width: 300px;
   text-align: right;
