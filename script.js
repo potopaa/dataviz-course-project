@@ -7,7 +7,7 @@ d3.csv("vstup_2024.csv").then(data => {
     score_f: +d.score_f
   }));
 
-  grouped.sort((a, b) => a.Ч - b.Ч);
+  grouped.sort((a,b) => b.Ч - a.Ч);
 
   const maxApplicants = d3.max(grouped, d => d.Ч);
   const maxScore = d3.max(grouped, d => Math.max(d.score_m, d.score_f));
@@ -35,5 +35,16 @@ d3.csv("vstup_2024.csv").then(data => {
   });
 
   document.getElementById("chart").append(chart);
+
+  // Легенда
+  const legend = document.createElement("div");
+  legend.innerHTML = `
+    <p><span style="color: steelblue;">■</span> Чоловіки</p>
+    <p><span style="color: red;">■</span> Жінки</p>
+    <p><span style="color: navy;">●</span> Середній бал (Чоловіки)</p>
+    <p><span style="color: orange;">●</span> Середній бал (Жінки)</p>
+  `;
+  legend.style.fontSize = "14px";
+  document.getElementById("chart").append(legend);
 
 }).catch(err => console.error("Error:", err));
