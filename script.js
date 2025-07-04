@@ -1,4 +1,4 @@
-d3.csv("vstup_2024.csv").then(data => {
+d3.csv("vstup_2024_agg.csv").then(data => {
 
   const grouped = data.map(d => ({
     speciality: d["Спеціальність"],
@@ -26,12 +26,24 @@ d3.csv("vstup_2024.csv").then(data => {
     },
     y: { domain: grouped.map(d => d.speciality), padding: 0.2 },
     marks: [
+      // Бары
       Plot.barX(grouped, { x: "Ч", y: "speciality", fill: "steelblue", opacity: 0.6 }),
       Plot.barX(grouped, { x: "Ж", y: "speciality", fill: "red", opacity: 0.4 }),
-      Plot.dot(grouped, { x: d => d.score_m * scoreScale, y: "speciality", fill: "navy", r: 4 }),
-      Plot.dot(grouped, { x: d => d.score_f * scoreScale, y: "speciality", fill: "orange", r: 4 }),
-
-      
+      // Точки — баллы Чоловіки
+      Plot.dot(grouped, {
+        x: d => d.score_m * scoreScale,
+        y: "speciality",
+        fill: "navy",
+        r: 4
+      }),
+      // Точки — баллы Жінки
+      Plot.dot(grouped, {
+        x: d => d.score_f * scoreScale,
+        y: "speciality",
+        fill: "orange",
+        r: 4
+      }),
+      // Верхняя шкала только для точек
       Plot.axisX({
         anchor: "top",
         ticks: 6,
@@ -43,4 +55,4 @@ d3.csv("vstup_2024.csv").then(data => {
 
   document.getElementById("chart").append(chart);
 
-}).catch(err => console.error("Error:", err));
+}).catch(err => console.error("❌ Error:", err));
