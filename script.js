@@ -1,4 +1,4 @@
-d3.csv("vstup_2024_agg.csv").then(data => {
+d3.csv("vstup_2024.csv").then(data => {
 
   const grouped = data.map(d => ({
     speciality: d["Спеціальність"],
@@ -55,4 +55,4 @@ d3.csv("vstup_2024_agg.csv").then(data => {
 
   document.getElementById("chart").append(chart);
 
-}).catch(err => console.error("❌ Error:", err));
+}).catch(err => console.error("Error:", err));
