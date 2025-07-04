@@ -5,6 +5,7 @@ body {
 }
 
 .plot-title {
+  text-align: center;
   font-size: 22px;
   font-weight: bold;
   line-height: 1.4;
@@ -15,20 +16,17 @@ body {
   right: 40px;
   bottom: 40px;
   font-size: 14px;
+  text-align: right;
 }
 
 .note {
   position: absolute;
   right: 40px;
-  bottom: 120px;
+  bottom: 160px;
   font-size: 14px;
-  max-width: 250px;
+  max-width: 300px;
   text-align: right;
   line-height: 1.4;
-}
-
-.note p {
-  margin: 4px 0;
 }
 
 .plot-source {
