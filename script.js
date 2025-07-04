@@ -19,21 +19,26 @@ d3.csv("vstup_2024.csv").then(data => {
     height: grouped.length * 20,
     marginLeft: 350,
     marginRight: 300,
-    x: { label: "Кількість вступників" },
+    x: {
+      label: "Кількість вступників",
+      labelAnchor: "center",
+      labelOffset: 40 // отступ вниз, чтобы подписка была ровно под цифрами
+    },
     y: { domain: grouped.map(d => d.speciality), padding: 0.2 },
     marks: [
       Plot.barX(grouped, { x: "Ч", y: "speciality", fill: "steelblue", opacity: 0.6 }),
       Plot.barX(grouped, { x: "Ж", y: "speciality", fill: "red", opacity: 0.4 }),
       Plot.dot(grouped, { x: d => d.score_m * scoreScale, y: "speciality", fill: "navy", r: 4 }),
       Plot.dot(grouped, { x: d => d.score_f * scoreScale, y: "speciality", fill: "orange", r: 4 }),
-
-      // 👉 Реальная верхняя шкала (добавляем вторую ось)
+      // 👉 Реальная верхняя шкала:
       Plot.axisX({
         anchor: "top",
         ticks: 6,
         tickFormat: d => Math.round(d / scoreScale),
-        label: "Конкурсний бал",
-      })
+        label: "Конкурсний бал"
+      }),
+      // 👉 Рисуем вспомогательные линии для разделителей, если хочешь:
+      Plot.ruleX(d3.range(0, maxApplicants * 0.5, maxApplicants * 0.5 / 6))
     ]
   });
 
