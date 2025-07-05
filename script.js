@@ -16,6 +16,36 @@ d3.csv("vstup_2024.csv").then(data => {
   const ticks = [0, 50, 100, 150, 200];
   const tickPos = ticks.map(d => d * scoreScale);
 
+  const scoreAxis = Plot.plot({
+    width: 1200,
+    height: 60,
+    marginLeft: 350,
+    marginRight: 300,
+    x: {
+      domain: [0, maxApplicants]
+    },
+    marks: [
+      Plot.ruleX(tickPos, { stroke: "#000", strokeOpacity: 0.2, y1: 0, y2: 20 }),
+      Plot.text(tickPos, {
+        text: ticks.map(String),
+        y: 30,
+        fill: "#000",
+        textAnchor: "middle",
+        fontSize: 12
+      }),
+      Plot.text([maxApplicants * 0.25], {
+        text: ["Конкурсний бал"],
+        y: 50,
+        fill: "#000",
+        fontWeight: "bold",
+        textAnchor: "middle",
+        fontSize: 12
+      })
+    ]
+  });
+
+  document.getElementById("score-axis").append(scoreAxis);
+
   const chart = Plot.plot({
     width: 1200,
     height: grouped.length * 20,
@@ -32,62 +62,12 @@ d3.csv("vstup_2024.csv").then(data => {
       padding: 0.2
     },
     marks: [
-
-      Plot.barX(grouped, {
-        x: "Ч",
-        y: "speciality",
-        fill: "steelblue",
-        opacity: 0.6
-      }),
-
-      Plot.barX(grouped, {
-        x: "Ж",
-        y: "speciality",
-        fill: "red",
-        opacity: 0.4
-      }),
-      
-      Plot.dot(grouped, {
-        x: d => d.score_m * scoreScale,
-        y: "speciality",
-        fill: "navy",
-        r: 4
-      }),
-      
-      Plot.dot(grouped, {
-        x: d => d.score_f * scoreScale,
-        y: "speciality",
-        fill: "orange",
-        r: 4
-      }),
-
-      
-      Plot.ruleX(tickPos, {
-        stroke: "#000",
-        strokeOpacity: 0.2,
-        y1: -20,
-        y2: grouped.length * 20
-      }),
-
-      Plot.text(tickPos, {
-        text: ticks.map(String),
-        y: -30,
-        fill: "#000",
-        textAnchor: "middle",
-        fontSize: 12
-      }),
-
-      Plot.text([maxApplicants * 0.25], {
-        text: ["Конкурсний бал"],
-        y: -50,
-        fill: "#000",
-        fontWeight: "bold",
-        textAnchor: "middle",
-        fontSize: 12
-      })
+      Plot.barX(grouped, { x: "Ч", y: "speciality", fill: "steelblue", opacity: 0.6 }),
+      Plot.barX(grouped, { x: "Ж", y: "speciality", fill: "red", opacity: 0.4 }),
+      Plot.dot(grouped, { x: d => d.score_m * scoreScale, y: "speciality", fill: "navy", r: 4 }),
+      Plot.dot(grouped, { x: d => d.score_f * scoreScale, y: "speciality", fill: "orange", r: 4 }),
     ]
   });
-
 
   document.getElementById("chart").append(chart);
 
