@@ -11,7 +11,7 @@ d3.csv("vstup_2024.csv").then(data => {
   grouped.sort((a,b) => b.Ч - a.Ч);
 
   const maxApplicants = d3.max(grouped, d => d.Ч);
-  const scoreScale = maxApplicants * 0.5 / 200;  // строго фикс 200 баллов
+  const scoreScale = maxApplicants * 0.5 / 200;  
 
   const ticks = [0, 50, 100, 150, 200];
   const tickPos = ticks.map(d => d * scoreScale);
