@@ -11,7 +11,7 @@ d3.csv("vstup_2024.csv").then(data => {
   grouped.sort((a,b) => b.Ч - a.Ч);
 
   const maxApplicants = d3.max(grouped, d => d.Ч);
-  const scoreScale = maxApplicants * 0.5 / 200;
+  const scoreScale = maxApplicants * 0.5 / 200; 
 
   const ticks = [0, 50, 100, 150, 200];
   const tickPos = ticks.map(d => d * scoreScale);
@@ -26,18 +26,49 @@ d3.csv("vstup_2024.csv").then(data => {
       labelAnchor: "center",
       labelOffset: 40
     },
-    y: { domain: grouped.map(d => d.speciality), padding: 0.2 },
+    y: {
+      domain: grouped.map(d => d.speciality),
+      label: "Спеціальність",
+      padding: 0.2
+    },
     marks: [
 
+      Plot.barX(grouped, {
+        x: "Ч",
+        y: "speciality",
+        fill: "steelblue",
+        opacity: 0.6
+      }),
+
+      Plot.barX(grouped, {
+        x: "Ж",
+        y: "speciality",
+        fill: "red",
+        opacity: 0.4
+      }),
       
-      Plot.barX(grouped, { x: "Ч", y: "speciality", fill: "steelblue", opacity: 0.6 }),
-      Plot.barX(grouped, { x: "Ж", y: "speciality", fill: "red", opacity: 0.4 }),
-      // Точки
-      Plot.dot(grouped, { x: d => d.score_m * scoreScale, y: "speciality", fill: "navy", r: 4 }),
-      Plot.dot(grouped, { x: d => d.score_f * scoreScale, y: "speciality", fill: "orange", r: 4 }),
+      Plot.dot(grouped, {
+        x: d => d.score_m * scoreScale,
+        y: "speciality",
+        fill: "navy",
+        r: 4
+      }),
+      
+      Plot.dot(grouped, {
+        x: d => d.score_f * scoreScale,
+        y: "speciality",
+        fill: "orange",
+        r: 4
+      }),
 
       
-      Plot.ruleX(tickPos, { stroke: "#000", strokeOpacity: 0.2, y1: -20, y2: grouped.length * 20 }),
+      Plot.ruleX(tickPos, {
+        stroke: "#000",
+        strokeOpacity: 0.2,
+        y1: -20,
+        y2: grouped.length * 20
+      }),
+
       Plot.text(tickPos, {
         text: ticks.map(String),
         y: -30,
@@ -45,6 +76,7 @@ d3.csv("vstup_2024.csv").then(data => {
         textAnchor: "middle",
         fontSize: 12
       }),
+
       Plot.text([maxApplicants * 0.25], {
         text: ["Конкурсний бал"],
         y: -50,
@@ -55,6 +87,7 @@ d3.csv("vstup_2024.csv").then(data => {
       })
     ]
   });
+
 
   document.getElementById("chart").append(chart);
 
