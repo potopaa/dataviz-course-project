@@ -46,7 +46,7 @@ body {
   color: #555;
 }
 
-/* 🎯 Базовый адаптив под узкий экран */
+
 @media screen and (max-width: 768px) {
   body {
     margin: 20px;
