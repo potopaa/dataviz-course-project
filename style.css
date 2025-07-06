@@ -45,11 +45,21 @@ body {
   body {
     margin: 20px;
   }
+
   .legend, .note {
     position: static;
     margin-top: 20px;
     text-align: left;
   }
+
+  .legend {
+    order: 1;
+  }
+
+  .note {
+    order: 2;
+  }
+
   #chart {
     width: 100%;
     overflow-x: auto;
