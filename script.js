@@ -10,7 +10,13 @@ d3.csv("vstup_2024.csv").then(data => {
 
   grouped.sort((a,b) => b.Ч - a.Ч);
 
-  // 
+  const maxApplicants = d3.max(grouped, d => d.Ч);
+  const scoreScale = maxApplicants * 0.5 / 200; 
+
+  const ticks = [0, 50, 100, 150, 200];
+  const tickPos = ticks.map(d => d * scoreScale);
+
+  // 🔵 Верхняя шкала — отдельный Plot
   const scoreAxis = Plot.plot({
     width: 1200,
     height: 60,
@@ -41,7 +47,7 @@ d3.csv("vstup_2024.csv").then(data => {
 
   document.getElementById("score-axis").append(scoreAxis);
 
-  // 
+  // 🔵 Основной график — бары и точки
   const chart = Plot.plot({
     width: 1200,
     height: grouped.length * 20,
