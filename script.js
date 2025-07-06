@@ -16,8 +16,8 @@ d3.csv("vstup_2024.csv").then(data => {
   const ticks = [0, 50, 100, 150, 200];
   const tickPos = ticks.map(d => d * scoreScale);
 
-
-    const scoreAxis = Plot.plot({
+  // 
+  const scoreAxis = Plot.plot({
     width: 1200,
     height: 60,
     marginLeft: 350,
@@ -47,8 +47,8 @@ d3.csv("vstup_2024.csv").then(data => {
 
   document.getElementById("score-axis").append(scoreAxis);
 
-
-    const chart = Plot.plot({
+  // 
+  const chart = Plot.plot({
     width: 1200,
     height: grouped.length * 20,
     marginLeft: 350,
