@@ -12,6 +12,11 @@ body {
   width: 100%;
 }
 
+#score-axis {
+  overflow: visible;
+  position: relative;
+}
+
 #chart {
   overflow: visible;
   position: relative;
