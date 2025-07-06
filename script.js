@@ -1,4 +1,4 @@
-d3.csv("vstup_2024_agg.csv").then(data => {
+d3.csv("vstup_2024.csv").then(data => {
 
   const grouped = data.map(d => ({
     speciality: d["Спеціальність"],
@@ -16,7 +16,6 @@ d3.csv("vstup_2024_agg.csv").then(data => {
   const ticks = [0, 50, 100, 150, 200];
   const tickPos = ticks.map(d => d * scoreScale);
 
-  // 👉 Верхняя шкала как отдельный Plot
   const scoreAxis = Plot.plot({
     width: 1200,
     height: 60,
@@ -47,7 +46,6 @@ d3.csv("vstup_2024_agg.csv").then(data => {
 
   document.getElementById("score-axis").append(scoreAxis);
 
-  // 👉 Основной график
   const chart = Plot.plot({
     width: 1200,
     height: grouped.length * 20,
@@ -56,7 +54,7 @@ d3.csv("vstup_2024_agg.csv").then(data => {
     x: {
       label: "Кількість вступників",
       labelAnchor: "center",
-      labelOffset: 40
+      labelOffset: 20
     },
     y: {
       domain: grouped.map(d => d.speciality),
@@ -73,4 +71,4 @@ d3.csv("vstup_2024_agg.csv").then(data => {
 
   document.getElementById("chart").append(chart);
 
-}).catch(err => console.error("❌ Error:", err));
+}).catch(err => console.error("Error:", err));
