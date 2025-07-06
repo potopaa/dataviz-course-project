@@ -1,4 +1,4 @@
-d3.csv("vstup_2024_agg.csv").then(data => {
+d3.csv("vstup_2024.csv").then(data => {
 
   const grouped = data.map(d => ({
     speciality: d["Спеціальність"],
@@ -11,6 +11,11 @@ d3.csv("vstup_2024_agg.csv").then(data => {
   grouped.sort((a,b) => b.Ч - a.Ч);
 
   const maxApplicants = d3.max(grouped, d => d.Ч);
+  if (!maxApplicants) {
+    console.error("No applicants data!");
+    return;
+  }
+
   const scoreScale = maxApplicants * 0.5 / 200;
 
   const chart = Plot.plot({
