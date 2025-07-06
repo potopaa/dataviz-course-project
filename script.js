@@ -11,12 +11,13 @@ d3.csv("vstup_2024.csv").then(data => {
   grouped.sort((a,b) => b.Ч - a.Ч);
 
   const maxApplicants = d3.max(grouped, d => d.Ч);
-  const scoreScale = maxApplicants * 0.5 / 200;
+  const scoreScale = maxApplicants * 0.5 / 200; 
 
   const ticks = [0, 50, 100, 150, 200];
   const tickPos = ticks.map(d => d * scoreScale);
 
-  const scoreAxis = Plot.plot({
+
+    const scoreAxis = Plot.plot({
     width: 1200,
     height: 60,
     marginLeft: 350,
@@ -37,6 +38,7 @@ d3.csv("vstup_2024.csv").then(data => {
         text: ["Конкурсний бал"],
         y: 50,
         fill: "#000",
+        fontWeight: "bold",
         textAnchor: "middle",
         fontSize: 12
       })
@@ -45,7 +47,8 @@ d3.csv("vstup_2024.csv").then(data => {
 
   document.getElementById("score-axis").append(scoreAxis);
 
-  const chart = Plot.plot({
+
+    const chart = Plot.plot({
     width: 1200,
     height: grouped.length * 20,
     marginLeft: 350,
@@ -53,7 +56,7 @@ d3.csv("vstup_2024.csv").then(data => {
     x: {
       label: "Кількість вступників",
       labelAnchor: "center",
-      labelOffset: 20
+      labelOffset: 40
     },
     y: {
       domain: grouped.map(d => d.speciality),
