@@ -37,7 +37,6 @@ d3.csv("vstup_2024.csv").then(data => {
         text: ["Конкурсний бал"],
         y: 50,
         fill: "#000",
-        fontWeight: "bold",
         textAnchor: "middle",
         fontSize: 12
       })
