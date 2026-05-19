@@ -65,17 +65,14 @@ function drawChart() {
     d3.max(chartData, function(d) { return d.score_f; })
   );
 
-  // Score dots sit at score * scoreRatio in applicant-count space,
-  // so maxScore maps to exactly 50 % of the bar axis width.
-  // Matches Python: score_scale = max_applicants * 0.5 / max_score
-  var scoreRatio = maxCh * 0.5 / maxScore;
-
   // X scale: applicant count (full inner width)
   var xCount = d3.scaleLinear()
     .domain([0, maxCh])
     .range([marginLeft, marginLeft + innerWidth]);
 
-  // X scale: score (half inner width) — same pixel positions as the dots
+  // X scale: score (half inner width) — same pixel positions as the dots.
+  // Matches Python: score_scale = max_applicants * 0.5 / max_score,
+  // so maxScore maps exactly to 50 % of the bar axis width.
   var xScore = d3.scaleLinear()
     .domain([0, maxScore])
     .range([marginLeft, marginLeft + innerWidth / 2]);
@@ -89,11 +86,19 @@ function drawChart() {
     .attr("height", topH);
   svgTop.selectAll("*").remove();
 
+  // Use linspace(0, maxScore, n) ticks — matches Python's np.linspace approach
+  // so the last tick lands exactly at maxScore and all dots stay within labels.
+  var nTopTicks = mobile ? 4 : 6;
+  var topTickValues = [];
+  for (var ti = 0; ti < nTopTicks; ti++) {
+    topTickValues.push(Math.round(ti * maxScore / (nTopTicks - 1)));
+  }
+
   svgTop.append("g")
     .attr("transform", "translate(0," + (topH - 2) + ")")
     .call(
       d3.axisTop(xScore)
-        .ticks(mobile ? 4 : 6)
+        .tickValues(topTickValues)
         .tickSize(4)
     )
     .call(function(g) { g.select(".domain").remove(); })
@@ -188,11 +193,17 @@ function drawChart() {
     .attr("height", botH);
   svgBot.selectAll("*").remove();
 
+  var nBotTicks = mobile ? 4 : 6;
+  var botTickValues = [];
+  for (var bi = 0; bi < nBotTicks; bi++) {
+    botTickValues.push(Math.round(bi * maxCh / (nBotTicks - 1)));
+  }
+
   svgBot.append("g")
     .attr("transform", "translate(0,2)")
     .call(
       d3.axisBottom(xCount)
-        .ticks(mobile ? 4 : 6)
+        .tickValues(botTickValues)
         .tickSize(4)
     )
     .call(function(g) { g.select(".domain").remove(); })
