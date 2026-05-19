@@ -5,31 +5,56 @@
   <title>Вступна кампанія 2024</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/dist/plot.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 </head>
 <body>
+  <div class="page">
 
-  <h1 class="plot-title">
-    Вступна кампанія 2024:<br/>
-    кількість вступників та середній конкурсний бал<br/>
-    (розподіл за статтю)
-  </h1>
+    <header class="page-header">
+      <h1>
+        Вступна кампанія 2024:<br>
+        кількість вступників та середній конкурсний бал<br>
+        (розподіл за статтю)
+      </h1>
+    </header>
 
-  <div id="chart"></div>
+    <div class="page-body">
 
-  <div class="note">
-    Навіть на "переважно чоловічі"<br/>
-    спеціальності жінки часто набирають<br/>
-    вищий конкурсний бал ніж чоловіки.<br/><br/>
-    <span class="plot-source">Джерело даних: ЄДЕБО</span>
-  </div>
+      <div class="chart-area">
+        <div class="axis-top-wrap">
+          <svg id="axis-top"></svg>
+        </div>
+        <div class="bars-scroll" id="bars-scroll">
+          <svg id="bars-svg"></svg>
+        </div>
+        <div class="axis-bottom-wrap">
+          <svg id="axis-bottom"></svg>
+        </div>
+      </div>
 
-  <div class="legend">
-    <p><span style="color: steelblue;">■</span> Кількість вступників (Чоловіки)</p>
-    <p><span style="color: red;">■</span> Кількість вступників (Жінки)</p>
-    <p><span style="color: navy;">●</span> Середній бал (Чоловіки)</p>
-    <p><span style="color: orange;">●</span> Середній бал (Жінки)</p>
+      <aside class="sidebar">
+        <div class="note">
+          Навіть на «переважно чоловічі» спеціальності жінки часто набирають
+          вищий конкурсний бал ніж чоловіки.
+        </div>
+        <div class="legend">
+          <div class="legend-item">
+            <span class="swatch men-bar"></span>Кількість вступників (Ч)
+          </div>
+          <div class="legend-item">
+            <span class="swatch women-bar"></span>Кількість вступників (Ж)
+          </div>
+          <div class="legend-item">
+            <span class="swatch-dot men-dot"></span>Середній бал (Ч)
+          </div>
+          <div class="legend-item">
+            <span class="swatch-dot women-dot"></span>Середній бал (Ж)
+          </div>
+        </div>
+        <div class="source">Джерело даних: ЄДЕБО</div>
+      </aside>
+
+    </div>
   </div>
 
   <script src="script.js"></script>
