@@ -1,9 +1,14 @@
 let chartData = null;
 
 d3.csv("vstup_2024.csv").then(function(raw) {
+  // The CSV has a UTF-8 BOM; some browsers pass it to d3-dsv, making the
+  // first column key "﻿Спеціальність" instead of "Спеціальність".
+  // We grab the first key dynamically so it works in every browser.
+  var specKey = Object.keys(raw[0])[0];
+
   chartData = raw.map(function(d) {
     return {
-      spec:    d["Спеціальність"],
+      spec:    d[specKey],
       ch:      +d["Ч"],
       zh:      +d["Ж"],
       score_m: +d["score_m"],
@@ -31,8 +36,18 @@ function drawChart() {
   var totalWidth = el.clientWidth || el.getBoundingClientRect().width;
 
   if (totalWidth <= 0) {
-    // Layout not ready yet — retry shortly
+    // Flex layout not computed yet — use window width minus sidebar as fallback
+    var sidebar = document.querySelector(".sidebar");
+    totalWidth = window.innerWidth - (sidebar ? sidebar.offsetWidth : 0);
+  }
+  if (totalWidth <= 0) {
     setTimeout(drawChart, 60);
+    return;
+  }
+
+  var maxCh = d3.max(chartData, function(d) { return d.ch; });
+  if (!maxCh || isNaN(maxCh)) {
+    el.innerHTML = '<p style="padding:20px;color:red">Помилка завантаження даних</p>';
     return;
   }
 
@@ -45,7 +60,6 @@ function drawChart() {
   var barH  = mobile ? 11 : 14;
   var fs    = mobile ? 9.5 : 11;
 
-  var maxCh = d3.max(chartData, function(d) { return d.ch; });
   var maxScore = Math.max(
     d3.max(chartData, function(d) { return d.score_m; }),
     d3.max(chartData, function(d) { return d.score_f; })
